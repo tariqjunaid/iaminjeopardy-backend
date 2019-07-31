@@ -1,3 +1,4 @@
+
 class GamesController < ApplicationController
    def index
       games = Game.all
@@ -5,35 +6,36 @@ class GamesController < ApplicationController
    end
 
    def show
-      game = Game.find_by(id: params[:id])
+      game = Game.find(params[:id])
       render json: game
    end
 
    def create
       game = Game.create(game_params)
       if game.valid?
-         render json: character
+         render json: game
       else 
          render json: {message: "not complete"}
       end
    end
 
    def update
-      game = Game.find_by(id: params[:id])
-      game.update
+      game = Game.find(params[:id])
+      # byebug
+      game.update(game_params)
       render json: game
    end
 
    def destroy
-      game = Game.find_by(id: params[:id])
+      game = Game.find(params[:id])
       game.destroy
       render json: game
    end
 
    private
 
-   def character_params
-      params.require(:game).permit(:score, :user_id)
+   def game_params
+      params.require(:game).permit(:score, :user_id, :id)
    end
 
    def default

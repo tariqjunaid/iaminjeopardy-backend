@@ -34,6 +34,15 @@ class UsersController < ApplicationController
    def user_params
       params.require(:user).permit(:username, :password)
    end
+   def default
+   {
+      :include => {
+         :games => { 
+            :except => [:created_at, :updated_at]
+            }
+         }, :except => [:created_at, :updated_at]
+      }        
+   end
 
 end
 
